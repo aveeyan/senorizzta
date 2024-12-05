@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet">
+    <link  rel="stylesheet" href="../static/css/chatbot.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Seno-Rizz-Ta: Chat with AI</title>
+</head>
+<body>
+    <!-- Use the local Font Awesome CSS -->
+    <link rel="stylesheet" href="../static/icons/font_awesome/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <h2 class="text-center py-3">Senorizzta</h2>
+            <ul class="nav flex-column px-3">
+                <li class="nav-item mb-3">
+                    <a href="{{url_for ('page_chatbot')}}"  class="nav-link text-dark d-flex align-items-center">
+                        <i class="fas fa-comments me-3"></i> Chatbot
+                    </a>
+                </li>
+                <li class="nav-item mb-3">
+                    <a href="{{url_for ('page_rizzme')}}" class="nav-link text-dark d-flex align-items-center">
+                        <i class="fas fa-smile me-3"></i> Rizz Me
+                    </a>
+                </li>
+                <li class="nav-item mb-3">
+                    <a href="#" class="nav-link text-dark d-flex align-items-center">
+                        <i class="fas fa-robot me-3"></i> AI Assist
+                    </a>
+                </li>
+                <li class="nav-item mb-3">
+                    <a href="#" class="nav-link text-dark d-flex align-items-center">
+                        <i class="fas fa-info-circle me-3"></i> About
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-dark d-flex align-items-center">
+                        <i class="fas fa-cogs me-3"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <!-- Content Area -->
+        <div class="chatarea d-flex flex-column flex-grow-1 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="mb-0">Chatbot: Powered by Llama3</h3>
+                <!-- Gender Selection Buttons -->
+<div class="btn-group chatbot-gender-select" role="group" aria-label="Gender Selection">
+    <button type="button" class="btn btn-outline-primary d-flex flex-column align-items-center flex-fill">
+        <i class="fa-solid fa-mars mb-2"></i>
+        <span>Male</span>
+    </button>
+    <button type="button" class="btn btn-outline-primary d-flex flex-column align-items-center flex-fill">
+        <i class="fa-solid fa-venus mb-2"></i>
+        <span>Female</span>
+    </button>
+    <button type="button" class="btn btn-outline-primary d-flex flex-column align-items-center flex-fill">
+        <i class="fa-solid fa-plane mb-2"></i>
+        <span>Boeing</span>
+    </button>
+</div>
+
+            </div>
+            <!-- Chat Messages Area -->
+            <div class="chat-messages flex-grow-1 overflow-auto mb-3" id="chatMessages">
+                <div class="message bot-message bg-secondary text-white p-md-2 mb-2">
+                    Hey there
+                </div>
+            </div>
+            <!-- Chat Input Area -->
+            <div class="chat-input d-flex">
+                <button class="end-convo btn btn-primary rounded-end-4">
+                    <i class="fa-solid fa-ban"></i>
+                </button>
+                <input type="text" class="form-control me-2" id="chatInput" placeholder="Type your message...">
+                <button class="send-text btn btn-primary rounded-end-4" id="sendButton">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+        
+        <script>
+            // Get references to elements
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const sendButton = document.getElementById('sendButton');
+            const userId = "unique_user_id"; // Replace with actual user ID logic if needed
+        
+            // Function to append a message to the chat
+            function appendMessage(message, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', `${type}-message`, 'p-md-2', 'mb-2');
+                if (type === 'user') {
+                    messageDiv.classList.add('user-message', 'text-white');
+                } else {
+                    messageDiv.classList.add('bg-secondary', 'text-white');
+                }
+                messageDiv.textContent = message;
+                chatMessages.appendChild(messageDiv);
+        
+                // Scroll to the bottom of the chat
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        
+            // Function to send user input to the server
+            async function sendMessage(message) {
+                try {
+                    const response = await fetch("/chat", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ user_id: userId, message: message })
+                    });
+        
+                    const data = await response.json();
+                    if (data.response) {
+                        appendMessage(data.response, 'bot'); // Append bot's response
+                    } else {
+                        appendMessage("Error: Unable to process request.", 'bot');
+                    }
+                } catch (error) {
+                    appendMessage("Error: Unable to connect to server.", 'bot');
+                }
+            }
+        
+            // Event listener for send button
+            sendButton.addEventListener('click', () => {
+                const message = chatInput.value.trim();
+                if (message) {
+                    appendMessage(message, 'user'); // Append user message
+                    chatInput.value = ''; // Clear the input field
+                    sendMessage(message); // Send message to server
+                }
+            });
+        
+            // Handle "Enter" key press in the input field
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    sendButton.click();
+                }
+            });
+        </script>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

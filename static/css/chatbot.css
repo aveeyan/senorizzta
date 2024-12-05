@@ -1,0 +1,351 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Grand+Hotel&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    /* overflow: hidden; */
+    height: 100%;
+}
+
+.container { /* Assuming the parent of gender-selection-section */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* Ensure it takes the full height of the viewport */
+    width: 100%;
+}
+.sidebar {
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(0deg, rgba(249, 184, 190, 0.25) 0%, rgba(249, 184, 190, 0.25) 100%);
+    border-radius: 0 45px 45px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+    font-size: 48px;
+    font-family: 'Grand Hotel', sans-serif;
+    color: #2E3B3E;
+    margin: 15px 0 15px 0;
+    /* padding: 0 15px 0 15px; */
+    padding: 20px;
+}
+
+.sidebar .nav-link {
+    font-weight: 400;
+    font-size: 20px;
+    transition: all 0.3s;
+    border-radius: 0 30px 30px 0;
+    padding: 45px;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(249, 184, 190, 0.4);
+    color: rgba(46, 59, 62, 0.8);
+}
+
+/* ChatBox CSS */
+
+.chatarea, .rizzarea {
+    margin-left: 275px;
+    margin-right: 25px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 45px;
+    background-color: #f5f5f5;
+}
+
+.chatarea h3 {
+    font-size: 32px;
+    font-family: 'Inter', sans-serif;
+    color: #2E3B3E;
+}
+
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5px; /* Add space between messages */
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* background-color: #fff; */
+    padding-top: 10px;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.btn-group{
+    padding-left: 45px;
+}
+
+.chat-input input {
+    width: 85%;
+    font-size: 18px;
+    margin: 0 0.5rem;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 22.5px;
+}
+
+.chat-input .send-text {
+    width: 12%;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: rgb(255, 0, 140);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-input .end-convo {
+    width: 12%;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: rgb(255, 0, 140);
+    border-color: rgb(255, 0, 140);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-input button:hover {
+    background-color: rgba(255, 0, 140, 0.473);
+    border-color: rgb(255, 0, 140);
+}
+
+.message {
+    display: inline-block;
+    max-width: 70%;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border-radius: 20px;
+    opacity: 0; /* Initial state for animation */
+    transform: translateY(20px); /* Start slightly below */
+    animation: fadeInUp 0.4s ease forwards; /* Animation */
+}
+
+.bot-message {
+    background-color: rgba(108, 117, 125, 0.8);
+    color: white;
+    align-self: flex-start;
+    margin-right: auto;
+    border-radius: 0 15px 15px 15px;
+}
+
+.user-message {
+    background-color: rgb(252, 78, 173);
+    color: white;
+    align-self: flex-end;
+    margin-left: auto;
+    border-radius: 15px 0 15px 15px;
+}
+
+/* Animation Keyframes */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Rizz Area */
+.rizzarea {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* min-height: 60vh; */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Aligns children at the start */
+    align-items: center;
+    padding: 1rem;
+    margin-top: 1rem;
+    position: relative;
+  }
+  
+  /* Heading Styling */
+  .rizzarea h3 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+/* Styling for the Gender Selection Section */
+.gender-selection-section {
+    background-color: #e9ecef; /* Light background to separate it visually */
+    border-radius: 22.5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 1rem; /* Padding inside the div */
+    margin-bottom: 1rem; /* Space below the section */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 400;
+    width: 100%; /* Ensure it takes the full width of its parent */
+    box-sizing: border-box; /* Include padding in width/height calculations */
+    min-height: 20vh; /* Ensure a minimum height */
+    justify-content: center; /* Center content vertically */
+}
+
+
+  
+  /* Button Group Styling */
+  .button-group-gender {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem; /* Space between the buttons */
+    margin-bottom: 1rem;
+  }
+  
+  /* Styling for Buttons */
+  .equal-width-button-gender {
+    width: 192px; /* Adjusted to be a square */
+    height: 256px; /* Equal height to width */
+    filter: brightness(0.6);
+    font-size: 1.5rem;
+    border-radius: 22.5px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Aligns text to the bottom */
+    align-items: center; /* Centers text horizontally */
+    padding: 0; /* Remove padding to ensure text is at the bottom */
+    overflow: hidden;
+  }
+
+  .equal-width-button-gender span{
+    margin-bottom: 5px;
+    background-color: #777;
+    padding: 5px;
+    font-size: medium;
+    font-weight: 600;
+    border-radius: 45px;
+  }
+  
+  /* Specific Button Backgrounds */
+  #maleRizzler {
+    background-image: url("../images/senorizzta_male.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #f5f5f5;
+  }
+  
+  #femaleRizzler {
+    background-image: url("../images/senorizzta_female.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  /* Hover Effects */
+  #maleRizzler:hover, #femaleRizzler:hover {
+    /* transition: cubic-bezier(0.075, 0.82, 0.165, 1); */
+    filter: grayscale(50%) brightness(80%) contrast(90%);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+
+.rizzarea h3 {
+    font-size: xx-large;
+    font-family: 'Inter', sans-serif;
+    color: #2E3B3E;
+}
+
+.generated-text {
+    width: 80%;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 22.5px;
+}
+
+.generated-text p {
+    color: #777;
+    font-style: italic;
+    border-radius: 22.5px;
+}
+
+.button-group .btn {
+    width: 10rem;
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.button-group .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.equal-width-button {
+    width: 150px; /* Ensures equal width for all buttons */
+    text-align: center; /* Centers the text within the button */
+}
+
+.equal-width-button-gender {
+    min-width: 120px;
+    margin: 0 5px;
+  }
+
+  .active {
+    border-radius: 60px; 
+    filter: brightness(1.05); /* Dim the brightness */
+    transform: scale(1.05); /* Slightly shrink */
+  }
+
+#generateButton {
+    background-color: rgba(255, 0, 140, 0.6);
+    border-color: rgba(255, 0, 140, 0.6);
+    color: #fff;
+}
+
+#generateButton:hover{
+    background-color: rgba(255, 0, 140, 0.9);
+    border-color: rgba(255, 0, 140, 0.9);
+    color: #fff;
+}
+
+
+#copyButton {
+    background-color: #28a745;
+    border: #1e7e34;
+    color: #fff;
+}
+
+#copyButton:hover {
+    background-color: #1e7e34;
+}

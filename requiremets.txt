@@ -1,0 +1,7 @@
+langchain
+langchain-ollama
+ollama
+flask
+pytesseract
+pillow
+opencv-python
