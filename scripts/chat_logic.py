@@ -1,43 +1,35 @@
-from langchain_ollama import OllamaLLM
+import ollama
 from langchain_core.prompts import ChatPromptTemplate
 
-# Load the prompt template
-with open("./scripts/prompts/femalebot.txt", "r") as file:
-    template = file.read()
+class Chatbot:
+    def __init__(self, user_id, gender):
+        self.model = "llama3"
+        self.user_contexts = {}
+        self.gender = gender
+        self.user_id = user_id
 
-# Initialize the model and chain
-model = OllamaLLM(model="llama3")
-prompt = ChatPromptTemplate.from_template(template)
-chain = prompt | model
+    def load_prompt(self):
+        file_path = f"./scripts/prompts/{self.gender}bot.txt"
+        try:
+            with open(file_path, "r") as file:
+                return file.read()
+        except FileNotFoundError:
+            raise ValueError(f"Prompt file for gender '{self.gender}' not found at {file_path}")
 
-# Context dictionary to maintain user conversations
-user_contexts = {}
+    def handle_chat(self, user_input):
+        try:
+            template = self.load_prompt()
+        except ValueError as e:
+            return str(e)
 
-def handle_chat(user_id, user_input):
-    """
-    Handles the chat logic for a given user.
+        prompt = ChatPromptTemplate.from_template(template)
+        formatted_prompt = prompt.format(context=self.user_contexts.get(self.user_id, ""), question=user_input)
 
-    Args:
-        user_id (str): Unique identifier for the user.
-        user_input (str): User's message to the chatbot.
+        try:
+            result = ollama.generate(model=self.model, prompt=formatted_prompt)
+        except Exception as e:
+            return f"Error generating response: {e}"
 
-    Returns:
-        str: The chatbot's response.
-    """
-    global user_contexts
-
-    # Retrieve or initialize the user's context
-    context = user_contexts.get(user_id, "")
-
-    # Invoke the model
-    result = chain.invoke(
-        {
-            "context": context,
-            "question": user_input,
-        }
-    )
-
-    # Update the user's context
-    user_contexts[user_id] = context + f"\nUser: {user_input}\nAI: {result}"
-
-    return result
+        context = self.user_contexts.get(self.user_id, "") + f"\nUser: {user_input}\nAI ({self.gender.capitalize()}): {result}"
+        self.user_contexts[self.user_id] = context
+        return result
