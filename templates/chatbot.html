@@ -11,7 +11,11 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="icon" type="image/x-icon" href="../static/icons/senorizzta.png">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../static/icons/senorizzta.png"
+    />
     <title>Seno-Rizz-Ta: Chat with AI</title>
   </head>
   <body>
@@ -63,224 +67,268 @@
           </li>
         </ul>
       </nav>
-
       <!-- Content Area -->
       <div class="chatarea d-flex flex-column flex-grow-1 p-4">
-        <div id="gender-selection-screen" class="d-flex flex-column align-items-center justify-content-center h-100">
-          <h3 class="mb-4">Select the Chatbot Gender</h3>
-          <p class="text-muted mb-4 align-content-center text-center">
-            This selection will personalize your experience. You can change this
-            later in settings. <br>Senorizzta is just a concept, and not affiliated to any real person.
-          
-            <!--Button Group for Chatbot-->
+        <div id="blurry"></div>
           <div
-            class="btn-group chatbot-gender-select"
-            role="group"
-            aria-label="Gender Selection"
+            id="gender-selection-screen"
+            class="d-flex flex-column align-items-center justify-content-center h-100"
           >
-            <button
-              type="button"
-              class="btn btn-outline-primary d-flex flex-column align-items-center flex-fill toggle-btn"
-              id="male_gendersel"
-              data-gender="male"
-            >
-            <div>
-              <i class="fa-solid fa-mars mb-2"></i>
-              <span>Male</span>
-            </div>
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-primary d-flex flex-column align-items-center flex-fill toggle-btn"
-              id="female_gendersel"
-              data-gender="female"
-            >
-            <div>
-              <i class="fa-solid fa-venus mb-2"></i>
-              <span>Female</span>
-            </div>
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-primary d-flex flex-column align-items-center flex-fill toggle-btn"
-              id="boeing_gendersel"
-              data-gender="boeing"
-            >
-              <div>
-              <i class="fa-solid fa-plane mb-2"></i>
-              <span>Boeing</span>
-            </div>
-            </button>
-          </div>
-          <button id="proceed-button" class="btn btn-success mt-4" disabled>
-            Proceed
-          </button>
-        </div>
+            <h3 class="mb-4">Select the Chatbot Gender</h3>
+            <p class="text-muted mb-4 align-content-center text-center">
+              This selection will personalize your experience. You can change
+              this later in settings. <br />Senorizzta is just a concept, and
+              not affiliated to any real person.
 
-        <div id="chat-screen" class="d-none">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="mb-0">Welcome to the Chatbot</h3>
-          </div>
-          <!-- Chat Messages Area -->
-          <div
-            class="chat-messages flex-grow-1 overflow-auto mb-3"
-            id="chatMessages"
-          >
+              <!--Button Group for Chatbot-->
+            </p>
+
             <div
-              class="message bot-message bg-secondary text-white p-md-2 mb-2"
+              class="btn-group chatbot-gender-select"
+              role="group"
+              aria-label="Gender Selection"
             >
-              Hey there
+              <button
+                type="button"
+                class="btn btn-outline-primary d-flex flex-column align-items-center flex-fill toggle-btn"
+                id="male_gendersel"
+                data-gender="male"
+              >
+                <div>
+                  <i class="fa-solid fa-mars mb-2"></i>
+                  <span>Male</span>
+                </div>
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-primary d-flex flex-column align-items-center flex-fill toggle-btn"
+                id="female_gendersel"
+                data-gender="female"
+              >
+                <div>
+                  <i class="fa-solid fa-venus mb-2"></i>
+                  <span>Female</span>
+                </div>
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-primary d-flex flex-column align-items-center flex-fill toggle-btn"
+                id="boeing_gendersel"
+                data-gender="boeing"
+              >
+                <div>
+                  <i class="fa-solid fa-plane mb-2"></i>
+                  <span>Boeing</span>
+                </div>
+              </button>
+            </div>
+            <button id="proceed-button" class="btn btn-success mt-4" disabled>
+              Proceed
+            </button>
+          </div>
+
+          <div id="chat-screen" class="d-none">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="mb-0">Welcome to the Chatbot</h3>
+            </div>
+            <!-- Chat Messages Area -->
+            <div
+              class="chat-messages flex-grow-1 overflow-auto mb-3"
+              id="chatMessages"
+            >
+              <div
+                class="message bot-message bg-secondary text-white p-md-2 mb-2"
+              >
+                Hey there
+              </div>
+            </div>
+            <!-- Chat Input Area -->
+            <div class="chat-input d-flex">
+              <button class="end-convo btn">
+                <i class="fa-solid fa-ban"></i>
+              </button>
+              <input
+                type="text"
+                class="form-control me-2"
+                id="chatInput"
+                placeholder="Type your message..."
+              />
+              <button class="send-text btn" id="sendButton">
+                <i class="fas fa-paper-plane"></i>
+              </button>
             </div>
           </div>
-          <!-- Chat Input Area -->
-          <div class="chat-input d-flex">
-            <button class="end-convo btn btn-primary rounded-end-4">
-              <i class="fa-solid fa-ban"></i>
-            </button>
-            <input
-              type="text"
-              class="form-control me-2"
-              id="chatInput"
-              placeholder="Type your message..."
-            />
-            <button
-              class="send-text btn btn-primary rounded-end-4"
-              id="sendButton"
-            >
-              <i class="fas fa-paper-plane"></i>
-            </button>
-          </div>
         </div>
-
       </div>
 
       <script>
         // Variable to store the selected gender
         let selectedGender = null;
-    
+
         // Get references to elements
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
-        const sendButton = document.getElementById('sendButton');
-        const proceedButton = document.getElementById('proceed-button');
+        const chatMessages = document.getElementById("chatMessages");
+        const chatInput = document.getElementById("chatInput");
+        const sendButton = document.getElementById("sendButton");
+        const proceedButton = document.getElementById("proceed-button");
         const userId = "unique_user_id"; // Replace with actual user ID logic if needed
-    
+        const chatArea = document.getElementsByClassName("chatarea")[0]; // Access the first element in the collection
+        const rizzArea = document.getElementsByClassName("rizzarea")[0]; // Access the first element in the collection
+
         // Function to append a message to the chat
         function appendMessage(message, type) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', `${type}-message`, 'p-md-2', 'mb-2');
-            if (type === 'user') {
-                messageDiv.classList.add('user-message', 'text-white');
-            } else {
-                messageDiv.classList.add('bg-secondary', 'text-white');
-            }
-            messageDiv.textContent = message;
-            chatMessages.appendChild(messageDiv);
-    
-            // Scroll to the bottom of the chat
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+          const messageDiv = document.createElement("div");
+          messageDiv.classList.add(
+            "message",
+            `${type}-message`,
+            "p-md-2",
+            "mb-2"
+          );
+          if (type === "user") {
+            messageDiv.classList.add("user-message", "text-white");
+          } else {
+            messageDiv.classList.add("bg-secondary", "text-white");
+          }
+          messageDiv.textContent = message;
+          chatMessages.appendChild(messageDiv);
+
+          // Scroll to the bottom of the chat
+          chatMessages.scrollTop = chatMessages.scrollHeight;
         }
-    
+
         // Function to handle gender selection and enable the "Proceed" button
         function handleGenderSelection(button) {
-            const gender = button.getAttribute('data-gender');
-            selectedGender = gender; // Store the selected gender
-    
-            // Update button styles to indicate selection
-            document.querySelectorAll('.toggle-btn').forEach(btn => {
-                btn.classList.remove('btn-primary');
-                btn.classList.add('btn-outline-primary');
-            });
-            button.classList.add('btn-primary'); // Highlight the selected button
-    
-            // Enable the "Proceed" button
-            proceedButton.disabled = false;
+          const gender = button.getAttribute("data-gender");
+          selectedGender = gender; // Store the selected gender
+
+          // Update button styles to indicate selection
+          document.querySelectorAll(".toggle-btn").forEach((btn) => {
+            btn.classList.remove("selected-btn"); // Remove custom selected style
+            btn.classList.add("btn-outline-primary"); // Revert to outline style
+            btn.style.filter = "brightness(0.6)"; // Reset filter for all buttons
+          });
+
+          // Apply the custom 'selected-btn' style to the clicked button
+          button.classList.remove("btn-outline-primary");
+          button.classList.add("selected-btn"); // Add the custom selected style
+          button.style.filter = "brightness(1)"; // Ensure the selected button is bright
+
+          // Enable the "Proceed" button
+          document.getElementById("proceed-button").disabled = false;
+
+          // Change the chat area background based on the selected gender
+          changeChatAreaBackground(gender);
         }
-    
+
+        
+        function changeChatAreaBackground(gender) {
+  const chatArea = document.querySelector('.chatarea'); // Ensure you're targeting the correct element
+
+  // Check if the path is correct with a simple console log
+  const imageUrl = `url("../static/images/senorizzta_${gender}.jpeg")`;
+  console.log(imageUrl); // Log image path
+
+  // Check if a background element already exists; if it does, remove it first
+  const existingBackground = chatArea.querySelector('.background');
+  if (existingBackground) {
+    existingBackground.remove();
+  }
+
+  // Create a new div to serve as the background with the blur effect
+  const backgroundElement = document.createElement('div');
+  backgroundElement.classList.add('background');
+  chatArea.appendChild(backgroundElement);
+
+  // Set the background image of the newly created element
+  backgroundElement.style.backgroundImage = imageUrl;
+  backgroundElement.style.backgroundSize = "auto"; // Ensure the background image covers the area
+
+  // Optional: Log background element to ensure it's added to the DOM
+  console.log(backgroundElement);
+}
+
+
         // Add event listeners to gender buttons
-        const genderButtons = document.querySelectorAll('.toggle-btn');
-        genderButtons.forEach(button => {
-            button.addEventListener('click', () => handleGenderSelection(button));
+        const genderButtons = document.querySelectorAll(".toggle-btn");
+        genderButtons.forEach((button) => {
+          button.addEventListener("click", () => handleGenderSelection(button));
         });
-    
+
         // Function to send user input to the server
         async function sendMessage(message) {
-    try {
-        if (!selectedGender) {
-            alert('Please select a gender before sending a message.');
-            return;
-        }
-
-        const response = await fetch("/chat", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        user_id: userId,
-        message: message,
-        gender: selectedGender
-    })
-});
-
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error('Server error:', errorData.error);
-            alert(`Error: ${errorData.error}`); // Display the error message
-            return;
-        }
-
-        const data = await response.json();
-        if (data.response) {
-            appendMessage(data.response, 'bot'); // Append bot's response
-        } else {
-            appendMessage("Error: Unable to process request.", 'bot');
-            console.log('Response data without expected property:', data);
-            console.log('User ID:', userId);
-            console.log('Message:', message);
-            console.log('Selected Gender:', selectedGender);
-
-        }
-    } catch (error) {
-        appendMessage("Error: Unable to connect to server.", 'bot');
-    }
-}
-    
-        // Event listener for send button
-        sendButton.addEventListener('click', () => {
-            const message = chatInput.value.trim();
-            if (message) {
-                appendMessage(message, 'user'); // Append user message
-                chatInput.value = ''; // Clear the input field
-                sendMessage(message); // Send message to server
+          try {
+            if (!selectedGender) {
+              alert("Please select a gender before sending a message.");
+              return;
             }
-        });
-    
-        // Handle "Enter" key press in the input field
-        chatInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                sendButton.click();
+
+            const response = await fetch("/chat", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                user_id: userId,
+                message: message,
+                gender: selectedGender,
+              }),
+            });
+
+            if (!response.ok) {
+              const errorData = await response.json();
+              console.error("Server error:", errorData.error);
+              alert(`Error: ${errorData.error}`); // Display the error message
+              return;
             }
-        });
-    
-        // Event listener for the "Proceed" button
-        proceedButton.addEventListener('click', () => {
-            if (selectedGender) {
-                document.getElementById('gender-selection-screen').classList.add('d-none');
-                document.getElementById('chat-screen').classList.remove('d-none');
+
+            const data = await response.json();
+            if (data.response) {
+              appendMessage(data.response, "bot"); // Append bot's response
             } else {
-                alert('Please select a gender before proceeding.');
+              appendMessage("Error: Unable to process request.", "bot");
+              console.log("Response data without expected property:", data);
+              console.log("User ID:", userId);
+              console.log("Message:", message);
+              console.log("Selected Gender:", selectedGender);
             }
+          } catch (error) {
+            appendMessage("Error: Unable to connect to server.", "bot");
+          }
+        }
+
+        // Event listener for send button
+        sendButton.addEventListener("click", () => {
+          const message = chatInput.value.trim();
+          if (message) {
+            appendMessage(message, "user"); // Append user message
+            chatInput.value = ""; // Clear the input field
+            sendMessage(message); // Send message to server
+          }
         });
-    
+
+        // Handle "Enter" key press in the input field
+        chatInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            sendButton.click();
+          }
+        });
+
+        // Event listener for the "Proceed" button
+        proceedButton.addEventListener("click", () => {
+          if (selectedGender) {
+            document
+              .getElementById("gender-selection-screen")
+              .classList.add("d-none");
+            document.getElementById("chat-screen").classList.remove("d-none");
+          } else {
+            alert("Please select a gender before proceeding.");
+          }
+        });
+
         // Optional: Initialize the UI state on load
         window.onload = () => {
-            proceedButton.disabled = true;
+          proceedButton.disabled = true;
         };
-    </script>
-    
-        
+      </script>
     </div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

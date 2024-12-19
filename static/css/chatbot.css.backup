@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Inter:wght@100..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Grand+Hotel&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 * {
     box-sizing: border-box;
 }
@@ -7,14 +6,18 @@
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
-    height: 100vh;
+    padding: 0;
+    /* overflow: hidden; */
+    height: 100%;
 }
 
-.wrapper {
+.container { /* Assuming the parent of gender-selection-section */
     display: flex;
-    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* Ensure it takes the full height of the viewport */
+    width: 100%;
 }
-
 .sidebar {
     width: 250px;
     height: 100%;
@@ -27,15 +30,16 @@ body {
 }
 
 .sidebar h2 {
-    font-size: 32px;
-    font-family: 'Anton SC', sans-serif;
+    font-size: 48px;
+    font-family: 'Grand Hotel', sans-serif;
     color: #2E3B3E;
-    margin: 15px;
-    padding: 0 15px 0 15px;
+    margin: 15px 0 15px 0;
+    /* padding: 0 15px 0 15px; */
+    padding: 20px;
 }
 
 .sidebar .nav-link {
-    font-weight: bold;
+    font-weight: 400;
     font-size: 20px;
     transition: all 0.3s;
     border-radius: 0 30px 30px 0;
@@ -47,67 +51,98 @@ body {
     color: rgba(46, 59, 62, 0.8);
 }
 
-.chatarea {
+/* ChatBox CSS */
+
+.chatarea, .rizzarea {
     margin-left: 275px;
     margin-right: 25px;
     height: 100vh;
     display: flex;
     flex-direction: column;
     padding: 20px;
+    border-radius: 45px;
     background-color: #f5f5f5;
 }
 
+.chatarea h3 {
+    font-size: 32px;
+    font-family: 'Inter', sans-serif;
+    color: #2E3B3E;
+}
+
 .chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5px; /* Add space between messages */
     flex-grow: 1;
     overflow-y: auto;
-    margin-bottom: 15px;
 }
 
 .chat-input {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #fff;
-    padding: 10px;
+    /* background-color: #fff; */
+    padding-top: 10px;
     border-top: 2px solid rgba(0, 0, 0, 0.1);
     position: sticky;
     bottom: 0;
-    /* width: calc(100% - 250px); */
     width: 100%;
     z-index: 10;
-    
+}
+
+.btn-group{
+    padding-left: 45px;
 }
 
 .chat-input input {
     width: 85%;
     font-size: 18px;
+    margin: 0 0.5rem;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 22.5px;
 }
 
-.chat-input button {
+.chat-input .send-text {
     width: 12%;
     font-size: 18px;
     padding: 10px;
-    border-radius: 5px;
-    background-color: #007bff;
+    border-radius: 15px;
+    background-color: rgb(255, 0, 140);
     color: white;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
+.chat-input .end-convo {
+    width: 12%;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: rgb(255, 0, 140);
+    border-color: rgb(255, 0, 140);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 .chat-input button:hover {
-    background-color: #0056b3;
+    background-color: rgba(255, 0, 140, 0.473);
+    border-color: rgb(255, 0, 140);
 }
 
 .message {
+    display: inline-block;
     max-width: 70%;
     padding: 10px 15px;
     margin-bottom: 10px;
     font-size: 16px;
     border-radius: 20px;
+    opacity: 0; /* Initial state for animation */
+    transform: translateY(20px); /* Start slightly below */
+    animation: fadeInUp 0.4s ease forwards; /* Animation */
 }
 
 .bot-message {
@@ -119,10 +154,268 @@ body {
 }
 
 .user-message {
-    background-color: #007bff;
+    background-color: rgb(252, 78, 173);
     color: white;
-    /* text-align: right; */
     align-self: flex-end;
     margin-left: auto;
     border-radius: 15px 0 15px 15px;
 }
+
+/* Animation Keyframes */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Rizz Area */
+.rizzarea {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* min-height: 60vh; */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Aligns children at the start */
+    align-items: center;
+    padding: 1rem;
+    margin-top: 1rem;
+    position: relative;
+  }
+  
+  /* Heading Styling */
+  .rizzarea h3 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+/* Styling for the Gender Selection Section */
+.gender-selection-section {
+    background-color: #e9ecef; /* Light background to separate it visually */
+    border-radius: 22.5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 1rem; /* Padding inside the div */
+    margin-bottom: 1rem; /* Space below the section */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 400;
+    width: 100%; /* Ensure it takes the full width of its parent */
+    box-sizing: border-box; /* Include padding in width/height calculations */
+    min-height: 20vh; /* Ensure a minimum height */
+    justify-content: center; /* Center content vertically */
+}
+
+
+  
+  /* Button Group Styling */
+  .button-group-gender {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem; /* Space between the buttons */
+    margin-bottom: 1rem;
+  }
+  
+  /* Styling for Buttons */
+  .equal-width-button-gender {
+    width: 192px; /* Adjusted to be a square */
+    height: 256px; /* Equal height to width */
+    filter: brightness(0.6);
+    font-size: 1.5rem;
+    border-radius: 22.5px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Aligns text to the bottom */
+    align-items: center; /* Centers text horizontally */
+    padding: 0; /* Remove padding to ensure text is at the bottom */
+    overflow: hidden;
+  }
+
+  .equal-width-button-gender span{
+    margin-bottom: 5px;
+    background-color: #777;
+    padding: 5px;
+    font-size: medium;
+    font-weight: 600;
+    border-radius: 45px;
+  }
+  
+  /* Specific Button Backgrounds */
+  #maleRizzler {
+    background-image: url("../images/senorizzta_male.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+  }
+  
+  #femaleRizzler {
+    background-image: url("../images/senorizzta_female.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  /* Hover Effects */
+  #maleRizzler:hover, #femaleRizzler:hover {
+    /* transition: cubic-bezier(0.075, 0.82, 0.165, 1); */
+    filter: grayscale(50%) brightness(80%) contrast(90%);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+
+.rizzarea h3 {
+    font-size: xx-large;
+    font-family: 'Inter', sans-serif;
+    color: #2E3B3E;
+}
+
+.generated-text {
+    width: 80%;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 22.5px;
+}
+
+.generated-text p {
+    color: #777;
+    font-style: italic;
+    border-radius: 22.5px;
+}
+
+.button-group .btn {
+    width: 10rem;
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.button-group .btn:hover {
+    transform: translateY(-5px);
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
+
+}
+
+.equal-width-button {
+    width: 150px; /* Ensures equal width for all buttons */
+    text-align: center; /* Centers the text within the button */
+}
+
+.equal-width-button-gender {
+    min-width: 120px;
+    margin: 0 5px;
+  }
+
+  .active {
+    filter: brightness(0.95); /* Dim the brightness */
+    transform: scale(1.01); /* Slightly shrink */
+  }
+
+#generateButton {
+    background-color: rgba(255, 0, 140, 0.6);
+    border-color: rgba(255, 0, 140, 0.6);
+    color: #fff;
+}
+
+#generateButton:hover{
+    background-color: rgba(255, 0, 140, 0.9);
+    border-color: rgba(255, 0, 140, 0.9);
+    color: #fff;
+}
+
+
+#copyButton {
+    background-color: #28a745;
+    border: #1e7e34;
+    color: #fff;
+}
+
+#copyButton:hover {
+    background-color: #1e7e34;
+}
+
+/* Gender Selection Screen */
+#gender-selection-screen{
+    margin: 0;
+    padding: 0;
+    font-size: large;
+    align-items: center;
+    justify-content: center;
+    border: 0px;
+}
+
+#male_gendersel{
+    background-image: url("../images/senorizzta_male.jpeg");
+    filter: brightness(0.6);
+}
+
+#female_gendersel{
+    background-image: url("../images/senorizzta_female.jpeg");
+    filter: brightness(0.6);
+}
+#boeing_gendersel{
+    background-image: url("../images/senorizzta_boeing.jpg");
+    filter: brightness(0.6);
+}
+
+#male_gendersel:hover, #female_gendersel:hover, #boeing_gendersel:hover{
+    filter: brightness(1.0);
+}
+
+.chatbot-gender-select{
+    padding: 15px;
+}
+
+.chatbot-gender-select button{
+    width: 160px;
+    height: 512px;
+    background-size: cover;
+    background-position:top;
+    background-repeat: no-repeat;
+    justify-content: flex-end;
+    border: none;
+    transition: all 0.4s ease-in-out;
+}
+
+.chatbot-gender-select button div{
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: large;
+    background-color: #fff;
+    color: #2E3B3E;
+    border-radius: 22.5px;
+}
+
+  .chatbot-gender-select button:hover {
+    width: 240px; /* Slightly larger width for a noticeable but subtle effect */
+    background-color: #007bff; /* Highlight with a smooth color change */
+    color: white; /* Change text color for contrast */
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2); /* Add a soft shadow */
+  }
+
+#proceed-button{
+    margin-top: 40px;
+    padding: 25px;
+    width: 192px;
+    font-size: large;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+

@@ -69,5 +69,9 @@ def page_rizzme():
 
     return render_template("rizzme.html")
 
+@app.route("/assist", methods=["GET", "POST"])
+def page_assist():
+    return render_template("assist.html")
+
 if __name__ == "__main__":
     app.run(debug=True)

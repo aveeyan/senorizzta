@@ -33,7 +33,7 @@ body {
     font-size: 48px;
     font-family: 'Grand Hotel', sans-serif;
     color: #2E3B3E;
-    margin: 15px 0 15px 0;
+    margin: 15px 0 75px 0;
     /* padding: 0 15px 0 15px; */
     padding: 20px;
 }
@@ -42,8 +42,9 @@ body {
     font-weight: 400;
     font-size: 20px;
     transition: all 0.3s;
-    border-radius: 0 30px 30px 0;
+    border-radius: 30px;
     padding: 45px;
+    
 }
 
 .sidebar .nav-link:hover {
@@ -56,122 +57,175 @@ body {
 .chatarea, .rizzarea {
     margin-left: 275px;
     margin-right: 25px;
-    height: 100vh;
+    height: 96vh;
+    margin-top: 2vh;
+    margin-bottom: 1vh;
     display: flex;
     flex-direction: column;
     padding: 20px;
     border-radius: 45px;
     background-color: #f5f5f5;
-}
+    position: relative; /* Ensure relative positioning */
+    /* overflow: hidden; Prevent content from overflowing */
+  }
+  
+  .chatarea .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: cover; /* Inherit background image from parent */
+    filter: blur(150px) brightness(1.2); /* Apply the blur effect */
+   
+  }
+  
+  .chatarea .chat-input, .chatarea .chat-messages {
+    position: relative; /* Ensure content is above blurred background */
+    z-index: 1; /* Keep content above the blurred background */
+  }
+  
 
-.chatarea h3 {
-    font-size: 32px;
-    font-family: 'Inter', sans-serif;
-    color: #2E3B3E;
-}
-
-.chat-messages {
+/* General container for the chat screen */
+#chat-screen {
     display: flex;
     flex-direction: column;
-    gap: 2.5px; /* Add space between messages */
-    flex-grow: 1;
-    overflow-y: auto;
-}
-
-.chat-input {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* background-color: #fff; */
-    padding-top: 10px;
-    border-top: 2px solid rgba(0, 0, 0, 0.1);
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    z-index: 10;
-}
-
-.btn-group{
-    padding-left: 45px;
-}
-
-.chat-input input {
-    width: 85%;
-    font-size: 18px;
-    margin: 0 0.5rem;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 22.5px;
-}
-
-.chat-input .send-text {
-    width: 12%;
-    font-size: 18px;
-    padding: 10px;
+    padding: 15px;
+    height: 100%; /* Full viewport height */
+    background-color: #f5f5f5;
     border-radius: 15px;
-    background-color: rgb(255, 0, 140);
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.chat-input .end-convo {
-    width: 12%;
-    font-size: 18px;
-    padding: 10px;
-    border-radius: 15px;
-    background-color: rgb(255, 0, 140);
-    border-color: rgb(255, 0, 140);
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+/* Header */
+#chat-screen h3 {
+    font-size: 24px;
+    font-weight: bolder;
+    font-family: 'Inter', sans-serif;
+    color: #2E3B3E;
+    margin-bottom: 15px;
 }
 
-.chat-input button:hover {
-    background-color: rgba(255, 0, 140, 0.473);
-    border-color: rgb(255, 0, 140);
+/* Chat messages container */
+.chat-messages {
+    padding-top: 25px;
 }
 
+/* Individual message styles */
 .message {
-    display: inline-block;
+    display: table;
     max-width: 70%;
     padding: 10px 15px;
     margin-bottom: 10px;
     font-size: 16px;
     border-radius: 20px;
-    opacity: 0; /* Initial state for animation */
-    transform: translateY(20px); /* Start slightly below */
-    animation: fadeInUp 0.4s ease forwards; /* Animation */
+    word-wrap: break-word;
+    animation: fadeInUp 0.4s ease forwards; /* Animation for messages */
+    opacity: 0;
+    transform: translateY(20px); /* Start below */
 }
 
 .bot-message {
-    background-color: rgba(108, 117, 125, 0.8);
+    background-color: rgba(108, 117, 125, 0.8); /* Neutral bot message */
     color: white;
-    align-self: flex-start;
+    align-self: flex-start; /* Align left */
     margin-right: auto;
     border-radius: 0 15px 15px 15px;
 }
 
 .user-message {
-    background-color: rgb(252, 78, 173);
+    background-color: rgb(252, 78, 173); /* Bright user message */
     color: white;
-    align-self: flex-end;
+    align-self: flex-end; /* Align right */
     margin-left: auto;
     border-radius: 15px 0 15px 15px;
 }
 
-/* Animation Keyframes */
+/* Chat input area */
+.chat-input {
+    align-items: center;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    margin-right: 10px;
+}
+
+.chat-input button {
+    width: 64px;
+    height: 32px;
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-input button i{
+    font-size: x-large;
+    color: rgb(108, 117, 125);
+}
+
+.chat-input button i:hover{
+    color: rgb(252, 78, 173);
+    filter: opacity(0.75)
+}
+
+.send-text {
+    background-color: rgb(255, 0, 140); /* Bright pink send button */
+}
+
+.send-text:hover {
+    background-color: rgba(255, 0, 140, 0.7);
+}
+
+.end-convo {
+    background-color: #ff4d4d; /* Red for ending conversation */
+    margin-right: 10px;
+}
+
+.end-convo:hover {
+    background-color: rgba(255, 77, 77, 0.7);
+}
+
+/* Animations */
 @keyframes fadeInUp {
-    0% {
+    from {
         opacity: 0;
         transform: translateY(20px);
     }
-    100% {
+    to {
         opacity: 1;
         transform: translateY(0);
     }
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #chat-screen {
+        padding: 15px;
+    }
+
+    .chat-input input {
+        margin-right: 5px;
+    }
+
+    .chat-input button {
+        padding: 8px;
+    }
+
+    .send-text, .end-convo {
+        width: auto;
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+}
+
 
 
 /* Rizz Area */
@@ -358,6 +412,8 @@ body {
     align-items: center;
     justify-content: center;
     border: 0px;
+    position: relative;
+    z-index: 1;
 }
 
 #male_gendersel{
@@ -370,7 +426,7 @@ body {
     filter: brightness(0.6);
 }
 #boeing_gendersel{
-    background-image: url("../images/senorizzta_boeing.jpg");
+    background-image: url("../images/senorizzta_boeing.jpeg");
     filter: brightness(0.6);
 }
 
@@ -402,12 +458,12 @@ body {
     border-radius: 22.5px;
 }
 
-  .chatbot-gender-select button:hover {
-    width: 240px; /* Slightly larger width for a noticeable but subtle effect */
-    background-color: #007bff; /* Highlight with a smooth color change */
-    color: white; /* Change text color for contrast */
-    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2); /* Add a soft shadow */
-  }
+.chatbot-gender-select button:hover {
+width: 240px; /* Slightly larger width for a noticeable but subtle effect */
+background-color: #007bff; /* Highlight with a smooth color change */
+color: white; /* Change text color for contrast */
+box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2); /* Add a soft shadow */
+}
 
 #proceed-button{
     margin-top: 40px;
@@ -416,6 +472,45 @@ body {
     font-size: large;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #4b4949;
+    border: #4b4949;
+}   
+
+/* Blurred Background Styling */
+#blurry {
+    position: absolute; /* Ensure it covers the entire parent div */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Send it behind other elements */
+    /* background: url('path-to-your-background-image.jpg') center/cover no-repeat; */
+    filter: blur(10px); /* Apply the blur effect */
+    opacity: 0.8; /* Optional: Adjust opacity for a subtle look */
+  }
+
+  
+/* AI Assist */
+
+assist-selection-section{
+    padding: 1rem;
 }
 
+.button-group-assist button{
+    width: 192px;
+    height: 128px;
+    background-size: cover;
+    background-position:top;
+    background-repeat: no-repeat;
+    justify-content: flex-end;
+    border: none;
+    transition: all 0.4s ease-in-out;
+}
 
+.button-group-assist button:hover{
+    width: 240px;
+}
+
+#uploadButton{
+    
+}
