@@ -1,21 +1,40 @@
+import cv2
 from PIL import Image
 import pytesseract
 
+def preprocess_image(image_path):
+    # Read the image using OpenCV
+    image = cv2.imread(image_path, cv2.IMREAD_COLOR)
+    
+    # Convert to grayscale
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    
+    # Apply thresholding to make text more distinct
+    _, thresh_image = cv2.threshold(gray_image, 150, 255, cv2.THRESH_BINARY)
+    
+    # Save the preprocessed image temporarily
+    preprocessed_path = "preprocessed_image.png"
+    cv2.imwrite(preprocessed_path, thresh_image)
+    return preprocessed_path
+
 def extract_text_from_image(image_path):
     try:
-        # Open the image using Pillow
-        img = Image.open(image_path)
+        # Preprocess the image
+        preprocessed_path = preprocess_image(image_path)
         
-        # Use pytesseract to extract text from the image
-        extracted_text = pytesseract.image_to_string(img)
+        # Open the preprocessed image with PIL
+        image = Image.open(preprocessed_path)
         
-        return extracted_text
+        # Extract text using pytesseract
+        text = pytesseract.image_to_string(image)
+        return text
     except Exception as e:
-        return f"An error occurred: {e}"
+        print(f"Error: {e}")
+        return None
 
-# Replace 'your_image.png' with the path to your image file
-image_path = './scripts/test_chat.png'
-text = extract_text_from_image(image_path)
+# Usage
+image_file = "./scripts/test_chat.png"
+extracted_text = extract_text_from_image(image_file)
 
-print("Extracted text from the image:")
-print(text)
+print("Extracted Text:")
+print(extracted_text)
