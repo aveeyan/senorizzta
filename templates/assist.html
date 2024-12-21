@@ -24,7 +24,6 @@
       crossorigin="anonymous"
     ></script>
 
-
     <div class="wrapper d-flex">
       <!-- Sidebar -->
       <nav class="sidebar">
@@ -47,7 +46,10 @@
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a href="{{url_for ('page_assist')}}" class="nav-link text-dark d-flex align-items-center">
+            <a
+              href="{{url_for ('page_assist')}}"
+              class="nav-link text-dark d-flex align-items-center"
+            >
               <i class="fas fa-robot me-3"></i> AI Assist
             </a>
           </li>
@@ -64,104 +66,259 @@
         </ul>
       </nav>
 
-      <!-- Content Area -->
-      <div
-        class="rizzarea d-flex flex-column align-items-center justify-content-start p-4"
+<!-- Content Area -->
+<div class="rizzarea d-flex flex-column align-items-center justify-content-start p-4">
+  <!-- Method Selection Section -->
+  <div class="assist-selection-section mb-lg-5">
+    <h3 class="mb-4 text-center">Select Method of Upload</h3>
+    <div class="button-group-assist d-flex justify-content-center mb-3 w-100">
+      <button
+        class="equal-width-button option-button upload-button"
+        id="uploadOption"
+        onclick="handleOption('upload')"
       >
-        <!-- Method Selection Section -->
-        <div class="assist-selection-section mb-lg-5">
-          <h3 class="mb-4 text-center">Select Method of Upload</h3>
-          
-          <div
-            class="button-group-assist d-flex justify-content-center mb-3 w-100"
-          >
-            <button
-              class="equal-width-button option-button upload-button"
-              id="uploadOption"
-              onclick="handleOption('upload')"
-            >
-              <span><i class="fas fa-solid fa-upload"></i>&nbsp;Upload</span>
-            </button>
-            <button
-              class="equal-width-button option-button text-button"
-              id="textOptionButton"
-              onclick="handleOption('textOption')"
-            >
-              <span
-                ><i class="fas fa-solid fa-keyboard"></i>&nbsp;Enter Text</span
-              >
-            </button>
-          </div>
-        </div>
+        <span><i class="fas fa-upload"></i>&nbsp;Upload</span>
+      </button>
+      <button
+        class="equal-width-button option-button text-button"
+        id="textOptionButton"
+        onclick="handleOption('textOption')"
+      >
+        <span><i class="fas fa-keyboard"></i>&nbsp;Enter Text</span>
+      </button>
+    </div>
+  </div>
 
-        <h3 class="mb-4 text-center">Rizz Me: AI Powered <i>Rizz</i></h3>
-
-        <!-- Generated Text Display -->
-        <div
-          class="generated-text bg-light text-dark p-4 mb-4 border rounded"
-          id="assistGeneratedText"
-        >
-          <p class="m-0 text-center" id="placeholderText">
-            Your generated <i>rizz</i> will appear here
-          </p>
-        </div>
-
-        <!-- Generate and Copy Buttons -->
-        <div class="button-group d-flex justify-content-center">
-          <button
-            class="btn btn-primary me-3 btn-lg equal-width-button"
-            id="copyButton"
-          >
-            <i class="fas fa-clipboard"></i> Copy
-          </button>
-          <button
-            class="btn btn-success btn-lg equal-width-button"
-            id="generateButton"
-          >
-            <i class="fas fa-heart"></i> Generate
-          </button>
-        </div>
+  <!-- Preview and Generate Section -->
+  <div class="assist-result-section mb-lg-5">
+    <!-- Preview Section -->
+    <div class="preview-section mb-4">
+      <h3 class="mb-4">Preview Section</h3>
+      <div id="previewContent" class="preview-content">
+        <!-- Content will be dynamically inserted here -->
+        <p class="placeholder-text" id="textPreview">Your preview will appear here...</p>
+        <textarea
+          id="previewText"
+          class="preview-area"
+          placeholder="Your preview will appear here..."
+          disabled
+        ></textarea>
       </div>
+    </div>
 
-      <script>
-        // Function to handle the options
-function handleOption(option) {
-  if (option === 'textOption') {
-    createTextArea();
-  } else if (option === 'upload') {
-    console.log('Upload option selected'); // Placeholder for upload logic
-  }
-}
+    <!-- Generated Section -->
+    <div class="generated-section mb-4">
+      <h3 class="mb-4">Generated Section</h3>
+      <textarea
+        id="generatedText"
+        class="generated-area"
+        placeholder="Generated content will appear here..."
+        disabled
+      ></textarea>
+      <div class="mb-2" id="btnAreaGeneration">
+        <button class="generate-button" onclick="handleGenerateAssist()">
+          <span><i class="fas fa-heart"></i>&nbsp;Generate</span>
+        </button>
+        <button class="copy-assist-button" onclick="handleCopyAssist()">
+          <span><i class="fas fa-clipboard"></i>&nbsp;Copy</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
-// Function to dynamically create a textarea
-function createTextArea() {
-  // Check if the textarea already exists
-  const existingTextArea = document.getElementById('dynamicTextArea');
-  if (existingTextArea) {
-    existingTextArea.focus(); // Focus on the existing textarea
+
+<script>
+// Variable to store the uploaded image temporarily
+let uploadedImage = null;
+
+// Variable to temporarily store the submitted text
+let submittedText = "";
+
+// Function to dynamically create a textbox and submit button
+function createTextBox() {
+  const existingTextBox = document.getElementById("dynamicTextBox");
+  if (existingTextBox) {
+    existingTextBox.focus(); // Focus on the existing textbox
     return;
   }
 
-  // Create a new textarea element
-  const textarea = document.createElement('textarea');
-  textarea.id = 'dynamicTextArea';
-  textarea.rows = 5; // Default number of rows
-  textarea.cols = 40; // Default number of columns
-  textarea.placeholder = 'Type your message here...';
-  textarea.style.marginTop = '10px'; // Add some spacing
-  textarea.style.width = '100%'; // Full width of the parent container
+  // Create a container div to hold the textbox and submit button
+  const containerDiv = document.createElement("div");
+  containerDiv.id = "dynamicTextBoxContainer";
+  containerDiv.classList.add("dynamic-container");
 
-  // Get the parent container and append the textarea
-  const parentContainer = document.querySelector('.assist-selection-section');
-  parentContainer.appendChild(textarea);
+  // Create a new input element for the textbox
+  const textBox = document.createElement("textarea");
+  textBox.id = "dynamicTextBox";
+  textBox.placeholder = "Type your message here...";
+  textBox.classList.add("dynamic-textbox");
 
-  // Focus on the textarea
-  textarea.focus();
+  // Create a new button element for submit
+  const submitButton = document.createElement("button");
+  submitButton.id = "dynamicSubmitButton";
+  submitButton.textContent = "Submit";
+  submitButton.classList.add("dynamic-submit-button");
+
+  submitButton.onclick = () => {
+    const inputValue = textBox.value.trim();
+    if (inputValue) {
+      // Store the input value temporarily
+      submittedText = inputValue;
+
+      // Replace the Preview Section content with the entered text
+      replacePreviewWithText(inputValue);
+
+      // Replace the Generated Section content with the entered text
+      replaceGeneratedWithText(inputValue);
+
+      // Clear the textbox
+      textBox.value = "";
+    } else {
+      alert("Please enter some text before submitting.");
+    }
+  };
+
+  containerDiv.appendChild(textBox);
+  containerDiv.appendChild(submitButton);
+
+  const parentContainer = document.querySelector(".assist-selection-section");
+  parentContainer.appendChild(containerDiv);
+
+  textBox.focus();
 }
 
-      </script>
+// Function to dynamically create an image upload input
+function createUploadInput() {
+  const existingUploadInput = document.getElementById("uploadInput");
+  if (existingUploadInput) {
+    existingUploadInput.click(); // Trigger the file selection dialog
+    return;
+  }
 
-      <style></style>
+  // Create an input element for file upload
+  const uploadInput = document.createElement("input");
+  uploadInput.id = "uploadInput";
+  uploadInput.type = "file";
+  uploadInput.accept = "image/*"; // Accept only image files
+  uploadInput.style.display = "none"; // Hidden input
+
+  // Handle the file upload
+  uploadInput.onchange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Store the uploaded image in the temporary variable
+      uploadedImage = file;
+
+      // Replace the Preview Section content with the uploaded image
+      replacePreviewWithImage(file);
+
+      // Replace the Generated Section content with the uploaded image
+      replaceGeneratedWithImage(file);
+    } else {
+      alert("No file selected.");
+    }
+  };
+
+  // Append the input to the document
+  document.body.appendChild(uploadInput);
+  uploadInput.click(); // Trigger the file selection dialog
+}
+
+// Function to replace the Preview Section content with the uploaded image
+function replacePreviewWithImage(file) {
+  const previewSection = document.getElementById("previewContent");
+
+  // Clear the existing preview content
+  previewSection.innerHTML = "";
+
+  // Create a FileReader to read the image file
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    // Create a new <img> element for the preview
+    const imgPreview = document.createElement("img");
+    imgPreview.id = "imagePreview";
+    imgPreview.src = event.target.result;
+    imgPreview.alt = "Uploaded Preview";
+    imgPreview.style.maxWidth = "100%";
+    imgPreview.style.maxHeight = "300px";
+
+    // Insert the image into the preview section
+    previewSection.appendChild(imgPreview);
+  };
+
+  reader.readAsDataURL(file);
+}
+
+// Function to replace the Generated Section content with the uploaded image
+function replaceGeneratedWithImage(file) {
+  const generatedSection = document.getElementById("generatedContent");
+
+  // Clear the existing generated content
+  generatedSection.innerHTML = "";
+
+  // Create a FileReader to read the image file
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    // Create a new <img> element for the generated content
+    const imgGenerated = document.createElement("img");
+    imgGenerated.id = "generatedImage";
+    imgGenerated.src = event.target.result;
+    imgGenerated.alt = "Generated Preview";
+    imgGenerated.style.maxWidth = "100%";
+    imgGenerated.style.maxHeight = "300px";
+
+    // Insert the image into the generated section
+    generatedSection.appendChild(imgGenerated);
+  };
+
+  reader.readAsDataURL(file);
+}
+
+// Function to replace the Preview Section content with entered text
+function replacePreviewWithText(text) {
+  const previewSection = document.getElementById("previewContent");
+
+  // Clear the existing preview content
+  previewSection.innerHTML = "";
+
+  // Create a paragraph element for the text preview
+  const textPreview = document.createElement("p");
+  textPreview.id = "textPreview";
+  textPreview.textContent = text;
+  textPreview.style.whiteSpace = "pre-wrap"; // Preserve line breaks
+
+  // Insert the text into the preview section
+  previewSection.appendChild(textPreview);
+}
+
+// Function to replace the Generated Section content with entered text
+function replaceGeneratedWithText(text) {
+  const generatedSection = document.getElementById("generatedContent");
+
+  // Clear the existing generated content
+  generatedSection.innerHTML = "";
+
+  // Create a paragraph element for the generated text
+  const textGenerated = document.createElement("p");
+  textGenerated.id = "textGenerated";
+  textGenerated.textContent = text;
+  textGenerated.style.whiteSpace = "pre-wrap"; // Preserve line breaks
+
+  // Insert the text into the generated section
+  generatedSection.appendChild(textGenerated);
+}
+
+// Function to handle the options
+function handleOption(option) {
+  if (option === "textOption") {
+    createTextBox();
+  } else if (option === "upload") {
+    createUploadInput();
+  }
+}
+
+</script>
     </div>
   </body>
 </html>
