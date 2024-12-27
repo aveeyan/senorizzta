@@ -311,14 +311,127 @@ function replaceGeneratedWithText(text) {
 
 // Function to handle the options
 function handleOption(option) {
-  if (option === "textOption") {
-    createTextBox();
-  } else if (option === "upload") {
-    createUploadInput();
+  // Remove any previously created inputs
+  const existingTextBoxContainer = document.getElementById("dynamicTextBoxContainer");
+  if (existingTextBoxContainer) existingTextBoxContainer.remove();
+
+  const existingUploadInput = document.getElementById("uploadInput");
+  if (existingUploadInput) existingUploadInput.remove();
+
+  // Handle the selected option
+  if (option === "upload") {
+    createUploadInput(); // Create the file upload input
+  } else if (option === "textOption") {
+    createTextBox(); // Create the textbox for text input
   }
 }
 
+function handleFileUpload(event) {
+  const file = event.target.files[0]; // Get the selected file
+  if (file) {
+    uploadedImage = file;
+    console.log("Selected file:", uploadedImage);
+  } else {
+    console.warn("No file selected.");
+  }
+}
+
+async function handleGenerateAssist() {
+  const url = "/assist";
+  let response;
+
+  try {
+    // Check if there is an uploaded image or text to send
+    if (uploadedImage) {
+      // Create FormData to send the image as binary data
+      const formData = new FormData();
+      formData.append("file", uploadedImage);
+
+      console.log("Sending image request to:", url);
+
+      // Send the FormData containing the image to the backend
+      response = await fetch(url, {
+        method: "POST",
+        body: formData,
+      });
+    } else if (submittedText) {
+      // Handle text input if no image is provided
+      const payload = {
+        text: submittedText,
+        user_id: "user123",
+        gender: "neutral",
+      };
+
+      console.log("Sending text request to:", url);
+      console.log("Payload:", JSON.stringify(payload));
+
+      response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+    } else {
+      alert("No data to send. Please upload an image or enter text.");
+      return;
+    }
+
+    // Check if the response is JSON
+    const contentType = response.headers.get("Content-Type");
+    if (response.ok && contentType && contentType.includes("application/json")) {
+      const data = await response.json();
+      console.log("Response from server:", data);
+
+      // Populate the textarea with data.response if it exists
+      const generatedTextArea = document.getElementById("generatedText");
+      if (generatedTextArea && data.response) {
+        generatedTextArea.value = data.response;  // Populate the textarea with data.response
+      } else {
+        console.error("Response does not contain 'response' property.");
+      }
+    } else {
+      const text = await response.text();
+      console.error("Non-JSON response from server:", text);
+      alert("Unexpected server response. Check the console for details.");
+    }
+  } catch (error) {
+    console.error("Error fetching response:", error);
+    alert("An error occurred while generating the response.");
+  }
+}
+
+// Function to handle copying the response to clipboard
+function handleCopyAssist() {
+  const generatedTextArea = document.getElementById("generatedText");
+
+  // Check if the textarea exists
+  if (generatedTextArea) {
+    // Select the text in the textarea
+    generatedTextArea.select();
+    generatedTextArea.setSelectionRange(0, 99999); // For mobile devices
+
+    try {
+      // Copy the text to the clipboard
+      const successful = document.execCommand("copy");
+
+      if (successful) {
+        alert("Response copied to clipboard!");
+      } else {
+        console.error("Failed to copy text.");
+      }
+    } catch (error) {
+      console.error("Error copying text:", error);
+      alert("An error occurred while copying the text.");
+    }
+  } else {
+    console.warn("Generated text area not found.");
+  }
+}
+
+
 </script>
+
     </div>
   </body>
 </html>

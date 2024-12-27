@@ -17,7 +17,7 @@ class ImageTextExtractor:
             image = cv2.imread(image_path, cv2.IMREAD_COLOR)
             gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             _, thresh_image = cv2.threshold(gray_image, 150, 255, cv2.THRESH_BINARY)
-            preprocessed_path = "preprocessed_image.png"
+            preprocessed_path = "./scripts/preprocessed/preprocessed_image.png"
             cv2.imwrite(preprocessed_path, thresh_image)
             return preprocessed_path
         except Exception as e:
@@ -76,11 +76,10 @@ class Assistbot:
         self.user_contexts[self.user_id] = context
         return result
 
-
 # Example Usage
 if __name__ == "__main__":
     # Step 1: Extract text from the image
-    image_file = "./scripts/test2.jpeg"
+    image_file = "./scripts/test_chat.png"
     text_extractor = ImageTextExtractor()
     extracted_text = text_extractor.extract_text(image_file)
 
@@ -92,6 +91,6 @@ if __name__ == "__main__":
         chatbot = Assistbot(user_id="user123", gender="male")  # Example user and gender
         response = chatbot.handle_chat(extracted_text)
         print("Chatbot Response:")
-        print(response["response"])
+        print(response)
     else:
         print("No text could be extracted from the image.")
