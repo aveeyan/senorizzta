@@ -2,6 +2,7 @@
 
 Senorizzta is an AI-powered web application designed to make conversations fun, engaging, and entertaining. It combines the charm of pickup lines, interactive chatbot dialogues, and intelligent AI assistance for a unique user experience. Whether you're looking to flirt, chat, or get assistance with interpreting chat screenshots, Senorizzta has you covered.
 
+![image](https://github.com/user-attachments/assets/13c003cb-8e41-473e-896e-34b9107414e1)
 ---
 
 ## Features
@@ -10,17 +11,22 @@ Senorizzta is an AI-powered web application designed to make conversations fun, 
 Add a spark to your conversations with personalized pickup lines! 
 - Select a preferred gender (Male/Female) for customization.
 - Generate fun and engaging pickup lines on the go.
+![image](https://github.com/user-attachments/assets/e681a061-ae1c-409f-8654-351540ca1242)
+
 
 ### 2. Chat with 3 Chatbots
 Interact with AI chatbots tailored to specific personalities:
 - **Male**: A suave and confident persona.
 - **Female**: A charming and witty conversationalist.
 - **Boeing**: A quirky chatbot that responds in random jet engine noises.
+![image](https://github.com/user-attachments/assets/bccca58b-f009-487c-88d7-8e895d1def4e)
+
 
 ### 3. AI Assist
 Leverage advanced AI assistance to enhance your communication:
 - Upload a screenshot of a chat conversation.
 - The AI will analyze the screenshot and generate an appropriate response.
+![image](https://github.com/user-attachments/assets/41ae0291-dc6e-4a2c-9f6f-2a4c85b6ede8)
 
 ---
 
