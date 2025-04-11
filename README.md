@@ -19,8 +19,9 @@ Interact with AI chatbots tailored to specific personalities:
 - **Male**: A suave and confident persona.
 - **Female**: A charming and witty conversationalist.
 - **Boeing**: A quirky chatbot that responds in random jet engine noises.
+![image](https://github.com/user-attachments/assets/2469ce44-e503-4f87-a323-7c38ea8dea5d)
 ![image](https://github.com/user-attachments/assets/bccca58b-f009-487c-88d7-8e895d1def4e)
-
+![image](https://github.com/user-attachments/assets/adf3e9aa-e93a-4552-bd52-1fbf298ea020)
 
 ### 3. AI Assist
 Leverage advanced AI assistance to enhance your communication:
